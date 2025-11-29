@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import { IUsersController, IUserService } from '../shared_kernel/user.interface';
 import { IEmailValidator, IPasswordValidator } from '../shared_kernel/utilities.interface';
 
-
 export class UsersController implements IUsersController {
     private emailValidator: IEmailValidator;
     private passwordValidator: IPasswordValidator;
