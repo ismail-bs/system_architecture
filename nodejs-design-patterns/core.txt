@@ -1,0 +1,117 @@
+Project Highlights
+
+Architecture / System Design
+
+Layered architecture: core → domain → infrastructure → utils → middlewares → app.js
+
+Clear separation of concerns
+
+Fully OOP-based: services, entities, repositories, command objects
+
+Dependency Injection container to manage services and repositories
+
+Design Patterns Included
+
+Singleton → Database connection (core/database.js)
+
+Factory → Notification creation (infrastructure/notifications/notificationFactory.js)
+
+Observer → Event bus for domain events (infrastructure/events/eventBus.js)
+
+Decorator → Logging wrapper for service methods (infrastructure/decorators/loggerDecorator.js)
+
+Strategy → Notification strategies: Email/SMS/Push (notificationFactory.js)
+
+Proxy → Caching repository reads (infrastructure/cache/proxyCache.js)
+
+Adapter → Legacy email system adapter (infrastructure/notifications/legacyEmailAdapter.js)
+
+Command → Commands for user registration & task creation (infrastructure/commands/commandHandler.js)
+
+Builder → Step-by-step creation of users & tasks (utils/builder/*.js)
+
+Middleware → Request validation & logging (middlewares/validator.js & logger.js)
+
+Repository → Abstraction of DB operations (infrastructure/repositories/*.js)
+
+Dependency Injection → Container registering & injecting services and repositories (core/container.js)
+
+SOLID Principles
+
+S → Single Responsibility: Each class/file handles one responsibility
+
+O → Open/Closed: Adding new notifications or commands does not modify existing code
+
+L → Liskov Substitution: All strategies follow same interface
+
+I → Interface Segregation: Small, focused interfaces in domain & infrastructure
+
+D → Dependency Inversion: High-level modules depend on abstractions, not concrete classes
+
+Other Features
+
+Express endpoints:
+
+POST /users → register user
+
+GET /users → list users
+
+POST /tasks → create task
+
+GET /tasks → list tasks
+
+Fully commented to explain every pattern, SOLID principle, and OOP design decision
+
+Ready-to-run: npm install → npm start
+
+Minimal in-memory database for simplicity (Singleton)
+
+
+
+task-manager-full/
+│
+├── package.json                    # Project metadata and dependencies
+├── app.js                          # Entry point: Express server wiring all components
+│
+├── core/                           # Core system utilities
+│   ├── database.js                 # Singleton pattern: in-memory DB
+│   └── container.js                # Dependency Injection container
+│
+├── domain/                         # Domain layer: Entities & Services
+│   ├── entities/
+│   │   ├── user.js                 # User entity (OOP, domain model)
+│   │   └── task.js                 # Task entity (OOP, domain model)
+│   │
+│   └── services/
+│       ├── userService.js          # User business logic (Builder + Repository + Observer)
+│       └── taskService.js          # Task business logic (Builder + Repository + Observer)
+│
+├── infrastructure/                 # Infrastructure: Repositories, Notifications, EventBus, etc.
+│   ├── repositories/
+│   │   ├── userRepository.js       # Repository pattern for Users
+│   │   └── taskRepository.js       # Repository pattern for Tasks
+│   │
+│   ├── cache/
+│   │   └── proxyCache.js           # Proxy pattern for caching repository results
+│   │
+│   ├── notifications/
+│   │   ├── notificationFactory.js  # Factory + Strategy patterns for sending notifications
+│   │   └── legacyEmailAdapter.js   # Adapter pattern for legacy email system
+│   │
+│   ├── events/
+│   │   └── eventBus.js             # Observer pattern: event emitter for domain events
+│   │
+│   ├── decorators/
+│   │   └── loggerDecorator.js      # Decorator pattern: add logging to service methods
+│   │
+│   └── commands/
+│       └── commandHandler.js       # Command pattern: encapsulate requests as objects
+│
+├── middlewares/                    # Express middlewares
+│   ├── validator.js                # Middleware pattern: request validation
+│   └── logger.js                   # Middleware pattern: request logging
+│
+└── utils/
+    └── builder/                    # Builder pattern: step-by-step construction of entities
+        ├── userBuilder.js          # User builder
+        └── taskBuilder.js          # Task builder
